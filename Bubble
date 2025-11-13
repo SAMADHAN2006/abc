@@ -1,0 +1,18 @@
+def bubble(salary):
+    n = len(salary)
+    for i in range(n - 1):
+        for j in range(n - 1 - i):
+            if salary[j] > salary[j + 1]:
+                salary[j], salary[j + 1] = salary[j + 1], salary[j]
+    print("\nBubble Sort:", salary)
+    print("Top 5 Salaries:", salary[-5:])
+
+
+salary = []
+
+n = int(input("How many employees? "))
+for i in range(n):
+    sal = float(input("Enter salary of employee {}: ".format(i + 1)))
+    salary.append(sal)
+
+bubble(salary)
