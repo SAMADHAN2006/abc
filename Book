@@ -1,0 +1,100 @@
+member_record = {}
+book_record = {}
+
+def add_member():
+    name = input("Enter member name: ")
+    if name in member_record:
+        print("Member already exists.\n")
+        return
+    count = int(input(f"Enter number of books borrowed by {name}: "))
+    member_record[name] = count
+    for i in range(count):
+        book = input(f"Enter book {i+1} title borrowed: ")
+        if book in book_record:
+            book_record[book] += 1
+        else:
+            book_record[book] = 1
+    print("Member added successfully.\n")
+
+def avg_books():
+    if not member_record:
+        print("No members available.\n")
+        return
+    total = 0
+    for val in member_record.values():
+        total += val
+    avg = total / len(member_record)
+    print(f"Average number of books borrowed: {avg:.2f}\n")
+
+def highlow():
+    if not book_record:
+        print("No book data available.\n")
+        return
+    high = -1
+    low = 99999
+    high_book = ""
+    low_book = ""
+    for book, count in book_record.items():
+        if count > high:
+            high = count
+            high_book = book
+        if count < low:
+            low = count
+            low_book = book
+    print(f"Most borrowed book: '{high_book}' ({high} times)")
+    print(f"Least borrowed book: '{low_book}' ({low} times)\n")
+
+def zero_count():
+    count = 0
+    for val in member_record.values():
+        if val == 0:
+            count += 1
+    print(f"Number of members who borrowed 0 books: {count}\n")
+
+def most_frequent():
+    if not book_record:
+        print("No book data available.\n")
+        return
+    # Count frequency of borrow values
+    freq = {}
+    for val in book_record.values():
+        if val in freq:
+            freq[val] += 1
+        else:
+            freq[val] = 1
+    # Find the mode
+    max_freq = -1
+    mode_val = None
+    for val in freq:
+        if freq[val] > max_freq:
+            max_freq = freq[val]
+            mode_val = val
+    print(f"Most frequently borrowed count is {mode_val} times.")
+    print("Books borrowed that many times:")
+    for book, val in book_record.items():
+        if val == mode_val:
+            print(f"'{book}'")
+    print()
+
+while True:
+    print("Menu")
+    print("1. Add member")
+    print("2. Average books borrowed")
+    print("3. High & Low borrowed books")
+    print("4. Members with 0 books")
+    print("5. Most frequent book borrowed")
+    print("6. Exit")
+    ch = int(input("Enter your choice: "))
+
+    if ch == 1:
+        add_member()
+    elif ch == 2:
+        avg_books()
+    elif ch == 3:
+        highlow()
+    elif ch == 4:
+        zero_count()
+    elif ch == 5:
+        most_frequent()
+    else:
+        break
